@@ -6,7 +6,7 @@ import net.tkdkid1000.atlas.sprites.Player;
 public class Sword extends Tool {
 
 	public Sword() {
-		super("sword", 10, "file:images/items/sword.png", 1.0);
+		super("sword", 10, "sword.png", 1.0);
 	}
 
 	@Override

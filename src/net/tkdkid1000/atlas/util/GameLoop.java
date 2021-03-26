@@ -30,7 +30,8 @@ public class GameLoop extends AnimationTimer {
 			});
 			Commands.handle();
 		}
-		inv.input();
+		if (!Commands.uiOpen) {
+			inv.input();
+		}
 	}
-
 }
