@@ -5,13 +5,11 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import net.tkdkid1000.raptor.App;
 import net.tkdkid1000.raptor.Input;
 import net.tkdkid1000.raptor.Sprite;
 import net.tkdkid1000.raptor.items.Inventory;
-import net.tkdkid1000.raptor.util.Settings;
 
 public class Player extends Sprite {
 

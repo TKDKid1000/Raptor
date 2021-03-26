@@ -22,10 +22,8 @@ import net.tkdkid1000.raptor.util.Settings;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -43,6 +41,7 @@ public class App extends Application {
 	public Text text;
 	public Text weapon;
 	public Text notification;
+	public Text chat;
 	private static boolean paused;
 	
 	public static App getInstance() {
@@ -71,13 +70,14 @@ public class App extends Application {
 		Settings.reload();
 		scene = new Scene(root, Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
 		stage.getIcons().add(new Image("file:steve.png"));
-		stage.setTitle("Scroller Game");
+		stage.setTitle("Raptor");
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();
 		text = new Text();
 		weapon = new Text();
 		notification = new Text();
+		chat = new Text();
 		Background bg = new Background(backdropLayer, new Image("file:bg.png", 9000, 9000, true, true), 0, 0, 0, 0, 0, 0, 0, 0) {
 
 			@Override
@@ -144,6 +144,16 @@ public class App extends Application {
 		notification.relocate(x, y);
 		notification.setText("");
 		notification.setBoundsType(TextBoundsType.VISUAL);
+		// chat
+		chat.setFont(Font.font(null, FontWeight.BOLD, 32));
+		chat.setFill(Color.GREEN);
+		chat.setStroke(Color.BLACK);
+		textLayer.getChildren().add(chat);
+		x = 0;
+		y = Settings.GAME_HEIGHT-100;
+		chat.relocate(x, y);
+		chat.setText("");
+		chat.setBoundsType(TextBoundsType.VISUAL);
 	}
 
 	

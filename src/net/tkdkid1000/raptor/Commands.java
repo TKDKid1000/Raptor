@@ -28,7 +28,6 @@ public class Commands {
 				App.pause();
 				uiOpen = false;
 				App.getInstance().playfieldLayer.getChildren().remove(commandprompt);
-				App.shownotification(commandprompt.getText(), 1000);
 				history.add(commandprompt.getText());
 				// command handling here
 				String cmd = commandprompt.getText().substring(1);
@@ -39,6 +38,8 @@ public class Commands {
 							player.getInventory().setTool(new Sword(10, 1.0));
 						}
 					});
+				} else {
+					App.shownotification(commandprompt.getText(), 1000);
 				}
 			});
 			commandprompt.setOnKeyPressed(event -> {
