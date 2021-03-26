@@ -1,20 +1,12 @@
 package net.tkdkid1000.raptor.items;
 
-public enum Tool {
-
-	NONE("none", 0.0),
-	WOODSWORD("woodensword", 5.0);
-
-	private String id;
-	private double damage;
-
-	Tool(String id, double damage) {
-		this.id = id;
-		this.damage = damage;
-	}
+public abstract class Tool extends Item {
 	
-	public String getId() {
-		return id;
+	protected double damage;
+
+	public Tool(String id, int uses, double damage) {
+		super(id, uses);
+		this.damage = damage;
 	}
 	
 	public double getDamage() {

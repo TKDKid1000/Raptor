@@ -9,8 +9,11 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import net.tkdkid1000.raptor.sprites.Background;
 import net.tkdkid1000.raptor.sprites.MapSprite;
 import net.tkdkid1000.raptor.sprites.Player;
@@ -33,24 +36,38 @@ public class App extends Application {
 	private static App instance;
 	public Pane playfieldLayer;
 	public Pane backdropLayer;
+	public Pane textLayer;
 	Scene scene;
 	
 	public List<Sprite> sprites = new ArrayList<Sprite>();
 	public Text text;
 	public Text weapon;
+	public Text notification;
+	private static boolean paused;
 	
 	public static App getInstance() {
 		return instance;
 	}
 	
+	public static boolean isPaused() {
+		return paused;
+	}
+	
+	public static void pause() {
+		paused = !paused;
+	}
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		instance = this;
+		paused = false;
 		Group root = new Group();
 		playfieldLayer = new Pane();
 		backdropLayer = new Pane();
+		textLayer = new Pane();
 		root.getChildren().add(backdropLayer);
 		root.getChildren().add(playfieldLayer);
+		root.getChildren().add(textLayer);
 		Settings.reload();
 		scene = new Scene(root, Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
 		stage.getIcons().add(new Image("file:steve.png"));
@@ -60,6 +77,7 @@ public class App extends Application {
 		stage.show();
 		text = new Text();
 		weapon = new Text();
+		notification = new Text();
 		Background bg = new Background(backdropLayer, new Image("file:bg.png", 9000, 9000, true, true), 0, 0, 0, 0, 0, 0, 0, 0) {
 
 			@Override
@@ -97,24 +115,35 @@ public class App extends Application {
 	}
 	
 	public void addText() {
-		text.setFont(Font.font( null, FontWeight.BOLD, 64));
+		// info
+		text.setFont(Font.font(null, FontWeight.BOLD, 64));
 		text.setStroke(Color.BLACK);
 		text.setFill(Color.RED);
-		backdropLayer.getChildren().add(text);
+		textLayer.getChildren().add(text);
 		double x = (Settings.GAME_WIDTH - text.getBoundsInLocal().getWidth()) / 2;
 		double y = (Settings.GAME_HEIGHT - text.getBoundsInLocal().getHeight()) / 2;
 		text.relocate(x, y);
 		text.setText("");
 		text.setBoundsType(TextBoundsType.VISUAL);
-		// split
-		weapon.setFont(Font.font( null, FontWeight.NORMAL, 48));
+		// weapon
+		weapon.setFont(Font.font(null, FontWeight.NORMAL, 48));
 		weapon.setFill(Color.BLACK);
-		backdropLayer.getChildren().add(weapon);
+		textLayer.getChildren().add(weapon);
 		x = Settings.GAME_WIDTH-200;
 		y = 40;
 		weapon.relocate(x, y);
 		weapon.setText("");
 		weapon.setBoundsType(TextBoundsType.VISUAL);
+		// notification
+		notification.setFont(Font.font(null, FontWeight.BOLD, 32));
+		notification.setFill(Color.GREEN);
+		notification.setStroke(Color.BLACK);
+		textLayer.getChildren().add(notification);
+		x = Settings.GAME_WIDTH/2;
+		y = 40;
+		notification.relocate(x, y);
+		notification.setText("");
+		notification.setBoundsType(TextBoundsType.VISUAL);
 	}
 
 	
@@ -136,5 +165,11 @@ public class App extends Application {
 				App.getInstance().sprites.add(piece);
 			}
 		}
+	}
+	
+	public static void shownotification(String notif, double time) {
+		App.getInstance().notification.setText(notif);
+		Timeline transition = new Timeline(new KeyFrame(Duration.millis(time), event -> App.getInstance().notification.setText("")));
+		transition.play();
 	}
 }

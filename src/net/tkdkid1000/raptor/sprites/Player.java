@@ -1,9 +1,12 @@
 package net.tkdkid1000.raptor.sprites;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import net.tkdkid1000.raptor.App;
 import net.tkdkid1000.raptor.Input;
 import net.tkdkid1000.raptor.Sprite;
@@ -14,6 +17,7 @@ public class Player extends Sprite {
 
 	private int speed;
 	private Inventory inv;
+	private boolean tooldelay;
 	
 	public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health,
 			double damage, int speed) {
@@ -21,6 +25,7 @@ public class Player extends Sprite {
 //		cancelexit();
 		this.speed = speed;
 		this.inv = new Inventory();
+		this.tooldelay = false;
 	}
 	
  
@@ -36,12 +41,14 @@ public class Player extends Sprite {
 	}
 	
 	public void handleitems() {
-		App.getInstance().weapon.setText(inv.getTool().getId());
-		App.getInstance().sprites.forEach(sprite -> {
-			if (collidesWith(sprite)) {
-				
+		App.getInstance().weapon.setText(inv.getTool().getId() + " " + inv.getTool().getUses());
+		if (Input.keys.contains(KeyCode.SPACE)) {
+			if (!tooldelay) {
+				getInventory().getTool().use(this);
+				tooldelay = true;
+				new Timeline(new KeyFrame(Duration.millis(500), event -> tooldelay = false)).play();
 			}
-		});
+		}
 	}
 	
 	public void handlemovement() {

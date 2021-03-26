@@ -3,6 +3,8 @@ package net.tkdkid1000.raptor.items;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.tkdkid1000.raptor.items.tools.None;
+
 public class Inventory {
 
 	private Map<Item, Integer> items;
@@ -10,7 +12,7 @@ public class Inventory {
 	
 	public Inventory() {
 		this.items = new HashMap<Item, Integer>();
-		this.tool = Tool.NONE;
+		this.tool = new None(1, 0);
 	}
 	
 	public Tool getTool() {
@@ -43,6 +45,7 @@ public class Inventory {
 	
 	public Inventory clear() {
 		this.items.clear();
+		this.tool = new None(1, 0);
 		return this;
 	}
 }
