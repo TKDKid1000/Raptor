@@ -14,6 +14,8 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import net.tkdkid1000.raptor.items.food.Apple;
+import net.tkdkid1000.raptor.items.tools.Sword;
 import net.tkdkid1000.raptor.sprites.Background;
 import net.tkdkid1000.raptor.sprites.MapSprite;
 import net.tkdkid1000.raptor.sprites.Player;
@@ -35,6 +37,7 @@ public class App extends Application {
 	public Pane playfieldLayer;
 	public Pane backdropLayer;
 	public Pane textLayer;
+	public Pane guiLayer;
 	Scene scene;
 	
 	public List<Sprite> sprites = new ArrayList<Sprite>();
@@ -42,6 +45,7 @@ public class App extends Application {
 	public Text weapon;
 	public Text notification;
 	public Text chat;
+	public Player player;
 	private static boolean paused;
 	
 	public static App getInstance() {
@@ -56,6 +60,10 @@ public class App extends Application {
 		paused = !paused;
 	}
 	
+	public static void setPaused(boolean paused) {
+		App.paused = paused;
+	}
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		instance = this;
@@ -64,9 +72,11 @@ public class App extends Application {
 		playfieldLayer = new Pane();
 		backdropLayer = new Pane();
 		textLayer = new Pane();
+		guiLayer = new Pane();
 		root.getChildren().add(backdropLayer);
 		root.getChildren().add(playfieldLayer);
 		root.getChildren().add(textLayer);
+		root.getChildren().add(guiLayer);
 		Settings.reload();
 		scene = new Scene(root, Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
 		stage.getIcons().add(new Image("file:steve.png"));
@@ -109,7 +119,9 @@ public class App extends Application {
 //			{'b', 'b', 'b', 'b', 'b', 'b', 'b', 'g', 'g', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'g', 'g'},
 //			{'b', 'b', 'b', 'b', 'b', 'b', 'b', 'g', 'g', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'g', 'g'},
 //		}, Settings.PLATFORM_SIZE, colors);
-		Player player = new Player(playfieldLayer, new Image("file:steve.png"), (Settings.GAME_WIDTH/2)+25, (Settings.GAME_HEIGHT/2)+25, 0, 0, 0, 0, 20, 20, 5);
+		player = new Player(playfieldLayer, new Image("file:steve.png"), (Settings.GAME_WIDTH/2)+25, (Settings.GAME_HEIGHT/2)+25, 0, 0, 0, 0, 20, 20, 5, 10.0);
+		player.getInventory().addItem(new Sword(), 1);
+		player.getInventory().addItem(new Apple(), 1);
 		App.getInstance().sprites.add(player);
 		
 	}
@@ -145,12 +157,12 @@ public class App extends Application {
 		notification.setText("");
 		notification.setBoundsType(TextBoundsType.VISUAL);
 		// chat
-		chat.setFont(Font.font(null, FontWeight.BOLD, 32));
-		chat.setFill(Color.GREEN);
-		chat.setStroke(Color.BLACK);
+		chat.setFont(Font.font(null, FontWeight.NORMAL, 16));
+		chat.setFill(Color.BLACK);
+		chat.setWrappingWidth(200);
 		textLayer.getChildren().add(chat);
 		x = 0;
-		y = Settings.GAME_HEIGHT-100;
+		y = Settings.GAME_HEIGHT-200;
 		chat.relocate(x, y);
 		chat.setText("");
 		chat.setBoundsType(TextBoundsType.VISUAL);

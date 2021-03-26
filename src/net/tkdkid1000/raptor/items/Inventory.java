@@ -12,7 +12,7 @@ public class Inventory {
 	
 	public Inventory() {
 		this.items = new HashMap<Item, Integer>();
-		this.tool = new None(1, 0);
+		this.tool = new None();
 	}
 	
 	public Tool getTool() {
@@ -21,6 +21,14 @@ public class Inventory {
 	
 	public Inventory setTool(Tool tool) {
 		this.tool = tool;
+		return this;
+	}
+	
+	public Inventory setToolFromInventory(Tool tool) {
+		if (items.containsKey(tool)) {
+			setTool(tool);
+			removeItem(tool);
+		}
 		return this;
 	}
 	
@@ -45,7 +53,7 @@ public class Inventory {
 	
 	public Inventory clear() {
 		this.items.clear();
-		this.tool = new None(1, 0);
+		this.tool = new None();
 		return this;
 	}
 }

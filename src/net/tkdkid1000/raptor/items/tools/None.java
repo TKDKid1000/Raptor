@@ -8,8 +8,8 @@ import net.tkdkid1000.raptor.sprites.Player;
 
 public class None extends Tool {
 
-	public None(int uses, double damage) {
-		super("none", uses, damage);
+	public None() {
+		super("none", 1, "file:images/items/none.png", 0.0);
 	}
 
 	@Override

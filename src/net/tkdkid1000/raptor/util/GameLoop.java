@@ -3,11 +3,13 @@ package net.tkdkid1000.raptor.util;
 import javafx.animation.AnimationTimer;
 import net.tkdkid1000.raptor.App;
 import net.tkdkid1000.raptor.Commands;
+import net.tkdkid1000.raptor.InventoryGui;
 import net.tkdkid1000.raptor.sprites.Player;
 
 public class GameLoop extends AnimationTimer {
 
 	int playermovetimer = 0;
+	InventoryGui inv = new InventoryGui();
 	
 	@Override
 	public void handle(long now) {
@@ -28,6 +30,7 @@ public class GameLoop extends AnimationTimer {
 			});
 			Commands.handle();
 		}
+		inv.input();
 	}
 
 }

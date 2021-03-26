@@ -3,8 +3,11 @@ package net.tkdkid1000.raptor;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.util.Duration;
 import net.tkdkid1000.raptor.items.tools.Sword;
 import net.tkdkid1000.raptor.sprites.Player;
 import net.tkdkid1000.raptor.util.Settings;
@@ -13,11 +16,14 @@ public class Commands {
 
 	public static boolean uiOpen = false;
 	public static List<String> history = new ArrayList<String>();
+	public static List<String> chatLines = new ArrayList<String>();
 	
 	public static void handle() {
-		if (Input.keys.contains(KeyCode.SLASH) && !uiOpen) {
+		if ((Input.keys.contains(KeyCode.SLASH) || Input.keys.contains(KeyCode.T)) && !uiOpen) {
 			TextField commandprompt = new TextField();
-			commandprompt.appendText("/");
+			if (Input.keys.contains(KeyCode.SLASH)) {
+				commandprompt.appendText("/");
+			}
 			uiOpen = true;
 			App.pause();
 			commandprompt.setLayoutX(0);
@@ -30,16 +36,27 @@ public class Commands {
 				App.getInstance().playfieldLayer.getChildren().remove(commandprompt);
 				history.add(commandprompt.getText());
 				// command handling here
-				String cmd = commandprompt.getText().substring(1);
-				if (cmd.equalsIgnoreCase("sword")) {
-					App.getInstance().sprites.forEach(sprite -> {
-						if (sprite instanceof Player) {
-							Player player = (Player) sprite;
-							player.getInventory().setTool(new Sword(10, 1.0));
-						}
-					});
-				} else {
-					App.shownotification(commandprompt.getText(), 1000);
+				if (commandprompt.getText().startsWith("/")) {
+					String cmd = commandprompt.getText().substring(1);
+					if (cmd.equalsIgnoreCase("sword")) {
+						App.getInstance().sprites.forEach(sprite -> {
+							if (sprite instanceof Player) {
+								Player player = (Player) sprite;
+								player.getInventory().setTool(new Sword());
+							}
+						});
+					} else if (cmd.equalsIgnoreCase("help")) {
+						sendChat("Commands:");
+						sendChat("1. /help");
+						sendChat("2. /sword");
+					} else {
+						sendChat("No command named \"/" + cmd + "\" Please perform \"/help\"");
+					}
+				} // chat handling
+				else {
+					if (!commandprompt.getText().strip().equals("")) {
+						sendChat("<Player> " + commandprompt.getText());
+					}
 				}
 			});
 			commandprompt.setOnKeyPressed(event -> {
@@ -55,5 +72,31 @@ public class Commands {
 				}
 			});
 		}
+	}
+	
+	public static void sendChat(String chat) {
+		chatLines.add(chat);
+		App.getInstance().chat.setText("");
+		chatLines.forEach(line -> {
+			App.getInstance().chat.setText(
+				App.getInstance().chat.getText() +
+				"\n" + line
+			);
+		});
+		if (chatLines.size() == 7) {
+			chatLines.remove(0);
+		}
+		new Timeline(new KeyFrame(Duration.seconds(3), event -> {
+			chatLines.remove(chat);
+			App.getInstance().chat.setText("");
+			chatLines.forEach(line -> {
+				App.getInstance().chat.setText(
+					App.getInstance().chat.getText() +
+					"\n" + line
+				);
+			});
+		}
+		)).play();
+		
 	}
 }

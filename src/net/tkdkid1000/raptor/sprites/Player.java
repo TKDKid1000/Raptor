@@ -14,14 +14,16 @@ import net.tkdkid1000.raptor.items.Inventory;
 public class Player extends Sprite {
 
 	private int speed;
+	private double food;
 	private Inventory inv;
 	private boolean tooldelay;
 	
 	public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health,
-			double damage, int speed) {
+			double damage, int speed, double food) {
 		super(layer, image, x, y, r, dx, dy, dr, health, damage);
 //		cancelexit();
 		this.speed = speed;
+		this.food = food;
 		this.inv = new Inventory();
 		this.tooldelay = false;
 	}
@@ -89,5 +91,20 @@ public class Player extends Sprite {
 	public void setInventory(Inventory inv) {
 		this.inv = inv;
 	}
+	
+	public double getSpeed() {
+		return speed;
+	}
+	
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
 
+	public double getFood() {
+		return food;
+	}
+	
+	public void setFood(double food) {
+		this.food = food;
+	}
 }
