@@ -1,5 +1,5 @@
 # Atlas
-An open world, 2d, minecraft style game!
+Minecraft, but it was made by 12 year olds.
 
 ## Playing
 You spawn into a small world. Nobody is there, except you. This place is calm and fun, until the night.
