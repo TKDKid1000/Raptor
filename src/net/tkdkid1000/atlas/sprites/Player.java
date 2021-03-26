@@ -1,0 +1,110 @@
+package net.tkdkid1000.atlas.sprites;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+import net.tkdkid1000.atlas.App;
+import net.tkdkid1000.atlas.Input;
+import net.tkdkid1000.atlas.Sprite;
+import net.tkdkid1000.atlas.items.Inventory;
+
+public class Player extends Sprite {
+
+	private int speed;
+	private double food;
+	private Inventory inv;
+	private boolean tooldelay;
+	
+	public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health,
+			double damage, int speed, double food) {
+		super(layer, image, x, y, r, dx, dy, dr, health, damage);
+//		cancelexit();
+		this.speed = speed;
+		this.food = food;
+		this.inv = new Inventory();
+		this.tooldelay = false;
+	}
+	
+ 
+	
+	@Override
+	public void move() {
+		
+	}
+	
+	public void handleInput() {
+		handlemovement();
+		handleitems();
+	}
+	
+	public void handleitems() {
+		App.getInstance().weapon.setText(inv.getTool().getId() + " " + inv.getTool().getUses());
+		if (Input.keys.contains(KeyCode.SPACE)) {
+			if (!tooldelay) {
+				getInventory().getTool().use(this);
+				tooldelay = true;
+				new Timeline(new KeyFrame(Duration.millis(500), event -> tooldelay = false)).play();
+			}
+		}
+	}
+	
+	public void handlemovement() {
+		if (Input.keys.contains(KeyCode.W)) {
+			App.getInstance().sprites.forEach((sprite) -> {
+				if (sprite instanceof MapSprite || sprite instanceof Background) {
+					sprite.setY(sprite.getY()+speed);
+				}
+			});
+		} else if (Input.keys.contains(KeyCode.S)) {
+			App.getInstance().sprites.forEach((sprite) -> {
+				if (sprite instanceof MapSprite || sprite instanceof Background) {
+					sprite.setY(sprite.getY()-speed);
+				}
+			});
+		} else if (Input.keys.contains(KeyCode.A)) {
+			App.getInstance().sprites.forEach((sprite) -> {
+				if (sprite instanceof MapSprite || sprite instanceof Background) {
+					sprite.setX(sprite.getX()+speed);
+				}
+			});
+		} else if (Input.keys.contains(KeyCode.D)) {
+			App.getInstance().sprites.forEach((sprite) -> {
+				if (sprite instanceof MapSprite || sprite instanceof Background) {
+					sprite.setX(sprite.getX()-speed);
+				}
+			});
+		}
+	}
+	
+	@Override
+	public void checkRemovability() {
+		
+	}
+	
+	public Inventory getInventory() {
+		return inv;
+	}
+	
+	public void setInventory(Inventory inv) {
+		this.inv = inv;
+	}
+	
+	public double getSpeed() {
+		return speed;
+	}
+	
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public double getFood() {
+		return food;
+	}
+	
+	public void setFood(double food) {
+		this.food = food;
+	}
+}

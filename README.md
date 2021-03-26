@@ -1,4 +1,4 @@
-# Raptor
+# Atlas
 An open world, 2d, minecraft style game!
 
 ## Playing
