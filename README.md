@@ -13,7 +13,7 @@ To open the crafting menu press <kbd>c</kbd>
 ## Building
 Not building in the game, building the game!
 In order to play a development version, simply follow these steps:
-1. Run the command `git clone https://github.com/TKDKid1000/Raptor`
-2. Navigate to the `Raptor` directory with `cd Raptor`
+1. Run the command `git clone https://github.com/TKDKid1000/Atlas`
+2. Navigate to the `Atlas` directory with `cd Atlas`
 3. Run the command `mvn clean install`
-4. Find the playable jar in `target/Raptor-<version>.jar`
+4. Find the playable jar in `target/Atlas-<version>.jar`
