@@ -1,9 +1,6 @@
 package net.tkdkid1000.atlas.items;
 
-import java.io.File;
-
 import javafx.scene.image.Image;
-import net.tkdkid1000.atlas.Assets;
 import net.tkdkid1000.atlas.sprites.Player;
 
 public abstract class Item {
@@ -31,7 +28,7 @@ public abstract class Item {
 	}
 	
 	public Image getImage() {
-		return new Image(new File(Assets.getAssetsFolder(), "images/items/"+icon).toURI().toString(), 20, 20, false, false);
+		return new Image("/images/items/"+icon, 20, 20, false, false);
 	}
 	
 	public void setUses(int uses) {
