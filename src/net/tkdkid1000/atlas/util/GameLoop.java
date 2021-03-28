@@ -1,15 +1,18 @@
 package net.tkdkid1000.atlas.util;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.input.KeyCode;
 import net.tkdkid1000.atlas.App;
 import net.tkdkid1000.atlas.Commands;
-import net.tkdkid1000.atlas.InventoryGui;
+import net.tkdkid1000.atlas.gui.InventoryGui;
+import net.tkdkid1000.atlas.gui.Menu;
 import net.tkdkid1000.atlas.sprites.Player;
 
 public class GameLoop extends AnimationTimer {
 
+	InventoryGui inv = new InventoryGui(KeyCode.E);
 	int playermovetimer = 0;
-	InventoryGui inv = new InventoryGui();
+	Menu menu = new Menu(KeyCode.ESCAPE);
 	
 	@Override
 	public void handle(long now) {
@@ -33,5 +36,6 @@ public class GameLoop extends AnimationTimer {
 		if (!Commands.uiOpen) {
 			inv.input();
 		}
+		menu.input();
 	}
 }
