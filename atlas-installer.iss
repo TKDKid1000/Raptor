@@ -28,7 +28,7 @@ LicenseFile=C:\Users\rhone\Desktop\AtlasGame\LICENSE
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=Atlas-Installer
+OutputBaseFilename=Atlas-{#MyAppVersion}-Installer
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -65,7 +65,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "C:\Users\rhone\Desktop\AtlasGame\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\rhone\Downloads\jdk-11.0.9_windows-x64_bin\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\rhone\Desktop\AtlasGame\target\Atlas-1.3.2-SNAPSHOT.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\rhone\Desktop\AtlasGame\target\Atlas-{#MyAppVersion}.jar"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
